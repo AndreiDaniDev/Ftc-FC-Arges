@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DriveTrain_simple {
     DcMotor frontLeftMotor, frontRightMotor;
     DcMotor backLeftMotor, backRightMotor;
-    public static double rpm = 0.0;
 
     ///  init function :) ///
     public DriveTrain_simple(HardwareMap hardwareMap){
@@ -37,7 +36,7 @@ public class DriveTrain_simple {
         double xx = +gamepad1.left_stick_x * 1.1;
         double yy = -gamepad1.left_stick_y;
 
-        double rotatexx = gamepad1.right_stick_x;
+        double rotatexx = -gamepad1.right_stick_x;
 
         double denominator = Math.max(Math.abs(xx) + Math.abs(yy) + Math.abs(rotatexx), 1);
         double frontLeftPower = (yy + xx + rotatexx) / denominator;
