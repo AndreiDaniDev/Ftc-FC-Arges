@@ -14,13 +14,13 @@ public class SliderGlisiere {
     public DcMotor left_motor;
     public DcMotor right_motor;
 
-    public int target_pos_up = -1560;
-    public int target_pos_down = 400;
+    public static int target_pos_up = -1950;
+    public static int target_pos_down = 0;
 
     private int target_pos = target_pos_down;
 
-    public float sync_kp = 0.003f;
-    public float slide_kp = 0.001f;
+    public static float sync_kp = 0.003f;
+    public static float slide_kp = 0.001f;
 
     public SliderGlisiere(HardwareMap hardwareMap){
         /// the right motor has an encoder ///
@@ -31,6 +31,9 @@ public class SliderGlisiere {
         right_motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         right_motor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        left_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         left_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         right_motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -58,7 +61,7 @@ public class SliderGlisiere {
         }
 
         if(gamepad.dpad_up){ target_pos = target_pos_up; }
-        if(gamepad.dpad_down){ target_pos = target_pos_down; }
+            if(gamepad.dpad_down){ target_pos = target_pos_down; }
 
         int delta = target_pos - left_motor.getCurrentPosition();
         setPowers(MathTricks.doubleClamp(slide_kp * delta, -1, 1));
